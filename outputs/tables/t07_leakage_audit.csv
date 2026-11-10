@@ -1,0 +1,9 @@
+,official split,grouped split (main)
+test_screens,4310.0,2176.0
+test_screens_with_exact_image_in_train_or_val_%,0.07,0.0
+test_screens_with_dhash_twin_in_train_or_val_%,1.51,0.46
+test_screens_with_cos>0.95_neighbour_in_train_or_val_%,23.27,22.66
+test_screens_with_cos>0.98_neighbour_in_train_or_val_%,4.22,2.94
+apps_shared_between_test_and_train_val,0.0,0.0
+test_screens_whose_app_is_also_in_train_val_%,0.0,0.0
+test_captions_also_in_train_val_%,29.79,29.86

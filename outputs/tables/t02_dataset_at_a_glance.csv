@@ -1,0 +1,12 @@
+item,value,detail
+Screens,"22,417","one screenshot per screen id; 22,417 distinct screen ids"
+Captions (summaries),"112,085",5.00 per screen (minimum 5 and maximum 5)
+Distinct caption strings,"83,857",lower-cased and stripped; the share of repeated texts is analysed in Section 2.3.1
+Words per caption,6.57 on average,"median 7 and maximum 12; vocabulary of 6,796 word types"
+Apps,"6,269",median 2 and maximum 45 screens per app
+App categories (Google Play),28,"from 1 to 1,648 screens per category"
+Official split sizes,"train 15,743 / val 2,364 / test 4,310",published partitions of the dataset card (kept as the reference split)
+Average store rating (per app),4.13 on average,median 4.2; missing for 0% of apps
+Number of ratings (per app),"median 6,700",parsed from a text column
+Download buckets (per app),16 distinct buckets,"most common bucket:   1,000,000 - 5,000,000  "
+Further columns not used here,screenshot icon and semantic image; view hierarchy; semantic annotations,view hierarchy present for 100% of screens; semantic annotations for 100% of screens

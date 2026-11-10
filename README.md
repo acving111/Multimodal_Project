@@ -6,6 +6,10 @@
 
 This project builds and compares models that retrieve written summaries from a screenshot (screen to text) and screenshots from a written summary (text to screen) on the RICO-Screen2Words dataset. It covers data quality checks, a leakage-aware split, four models (ridge baseline, early fusion, contrastive dual encoder and a frozen CLIP reference), statistical comparison, efficiency, overfitting diagnosis, subgroup and failure analysis, and ethics. Everything is run from one notebook, `Multimodal_Project_2_2_RICO_Retrieval_a2996845.ipynb`.
 
+The submitted notebook contains the saved outputs of one full run on a free Google Colab T4 GPU, and the report uses those numbers. A rerun with the same seeds follows the same steps. Timings differ between machines.
+
+GitHub repository: https://github.com/acving111/Multimodal_Project (private; contributor access has been given to Professor Sasha Gavryushkina).
+
 ## Contents
 
 1. [Data flow and models](#1-data-flow-and-models)
@@ -29,7 +33,7 @@ Hugging Face dataset  rootsautomation/RICO-Screen2Words   (downloaded automatica
 Section 2   quality checks, cleaning, privacy review
         |
         v
-Frozen features (cached):  ResNet-50 screen vectors, BERT caption vectors, CLIP vectors
+Frozen features (computed in each run):  ResNet-50 screen vectors, BERT caption vectors, CLIP vectors
         |
         v
 Leakage audit and grouped split  (train / validation / test)
@@ -55,7 +59,7 @@ outputs/   (figures, tables, configuration record)
 
 The re-ranker (E4) from the proposal is not part of this build and is listed as future work in the report.
 
-The notebook reads its data only from the Hugging Face dataset and from its own feature cache. No other data file is needed.
+The notebook reads its data only from the Hugging Face dataset. It does not store any image or feature cache on disk: the decoded screenshots and the features are computed in each run and kept in memory. No other data file is needed.
 
 ---
 
@@ -75,7 +79,7 @@ Where each part is implemented in the notebook:
 | Dataset loading, schema and licence | 2.2 |
 | Text quality, image quality, manual privacy review | 2.3 |
 | Cleaning and token limit | 2.4 |
-| Frozen feature extraction and cache | 2.5 |
+| Frozen feature extraction | 2.5 |
 | Leakage audit and grouped split | 2.6 |
 | Retrieval metrics with multiple positives | 3.1 |
 | E0 ridge baseline and BERT pooling | 3.2 |
@@ -97,7 +101,8 @@ Where each part is implemented in the notebook:
 | Python | 3.10 or newer (the recorded run used 3.13) |
 | GPU | An NVIDIA GPU is strongly recommended. The recorded run used a Tesla T4 with 15.6 GB memory on Google Colab. A CPU run works but is much slower |
 | Internet | Needed on the first run to download the dataset and the pretrained ResNet-50, BERT and CLIP weights |
-| Disk space | About 10 GB free for the dataset, model weights and the feature cache |
+| Disk space | About 10 GB or more free on the drive that holds the project folder, for the downloaded dataset (`hf_cache\`). The model weights use a few hundred MB in the default library cache on C: |
+| Memory | At least 8 GB of RAM. The decoded screenshots (about 3.4 GB for the full dataset) and the features are kept in memory during the run |
 | Packages | `torch`, `torchvision`, `transformers`, `datasets`, `huggingface_hub`, `scikit-learn`, `scipy`, `numpy`, `pandas`, `pyarrow`, `matplotlib`, `seaborn`, `pillow`, `tqdm`, `ipython`, `ipykernel`, `jupyter`, `nbconvert` (listed in `requirements.txt`) |
 
 > **Note:** The recorded run used torch 2.11.0, transformers 5.20.2, datasets 4.8.5 and torchvision 0.26.0. Newer or older versions usually work, but exact numbers can differ slightly. For a GPU on Windows, install the CUDA build of PyTorch from pytorch.org before Step 2.
@@ -106,14 +111,14 @@ Where each part is implemented in the notebook:
 
 ## 4. Folder layout and dataset placement
 
-The project folder is `C:\Multimodal_assign`. It can be placed elsewhere, because no path in the notebook is hard coded: the notebook uses the folder it is started from.
+The project folder is `D:\Multimodal_Project`. It can be placed elsewhere, because no path in the notebook is hard coded: the notebook uses the folder it is started from. Keep it on a drive with enough free space (see section 3), because the downloaded dataset is stored inside it.
 
 The dataset is **not** placed in the folder by hand. It is downloaded from Hugging Face automatically the first time the notebook runs.
 
 Before running, the folder must look like this:
 
 ```text
-Multimodal_assign\
+Multimodal_Project\
 |-- Multimodal_Project_2_2_RICO_Retrieval_a2996845.ipynb
 |-- requirements.txt
 |-- README.md
@@ -123,14 +128,14 @@ Multimodal_assign\
 |     |-- tables\
 |     |-- configs\
 |
-|-- cache\                    created automatically (decoded screenshots and feature files)
+|-- hf_cache\                 created automatically (downloaded dataset)
 ```
 
-- The notebook, `requirements.txt` and `README.md` go directly in `Multimodal_assign\`.
-- `outputs\` and `cache\` are created by the notebook. Do not create them yourself.
-- Start Jupyter from the `Multimodal_assign` folder, so that `outputs\` and `cache\` are created inside it.
-- `outputs\` and `cache\` are not part of the submission.
-- When the notebook runs in Google Colab instead, the same files are written to `/content/cache` and `MyDrive/rico_2_2_outputs` (see Option B in section 5).
+- The notebook, `requirements.txt` and `README.md` go directly in `Multimodal_Project\`.
+- `outputs\` and `hf_cache\` are created by the notebook. Do not create them yourself.
+- Start Jupyter from the `Multimodal_Project` folder, so that `outputs\` and `hf_cache\` are created inside it.
+- `outputs\` and `hf_cache\` are not part of the submission.
+- When the notebook runs in Google Colab instead, place the same folder in Google Drive as `MyDrive/Multimodal_Project`. The notebook then writes `outputs/` and `hf_cache/` inside that folder (see Option B in section 5). All paths are relative to the project folder.
 
 ---
 
@@ -140,14 +145,14 @@ All commands are written for the Windows Command Prompt (`cmd`). Follow the step
 
 ### Step 1: Open Command Prompt in the project folder
 
-1. Open the `Multimodal_assign` project folder in File Explorer.
+1. Open the `Multimodal_Project` project folder in File Explorer.
 2. Click the address bar at the top of File Explorer.
 3. Type `cmd` and press Enter.
 
 Command Prompt opens directly in the project folder and shows, for example:
 
 ```cmd
-C:\Multimodal_assign>
+D:\Multimodal_Project>
 ```
 
 > **Important:** All commands in this guide must be run from this folder unless stated otherwise.
@@ -155,9 +160,6 @@ C:\Multimodal_assign>
 ### Step 2: Create a virtual environment and install the packages
 
 ```cmd
-python -m venv venv
-venv\Scripts\activate
-python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
@@ -184,25 +186,23 @@ GPU available: True
 
 Use **one** of the following.
 
-**Option A: run on your computer (this folder).** Run the notebook from the command line:
-
-```cmd
-python -m jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=-1 Multimodal_Project_2_2_RICO_Retrieval_a2996845.ipynb
-```
-
-Or open it in Jupyter and choose Run All:
+**Option A: run on your computer (this folder).**  open it in Jupyter and choose Run All:
 
 ```cmd
 python -m jupyter lab
 ```
 
-**Option B: run in Google Colab.** Upload the notebook to Colab, choose a T4 GPU runtime and select Run all. When asked, allow access to Google Drive. Google Drive is optional and only keeps the outputs between sessions. Large caches stay on the local disk of the Colab session.
+> **Important:** Run all cells from the top, in order, after every kernel restart. Each cell uses variables made by the cells before it. Do not run a single cell on its own.
+
+**Option B: run in Google Colab.** Put the project folder in Google Drive as
+ `/content/drive/MyDrive/Multimodal_Project`
+ open the notebook from there in Colab, choose a T4 GPU runtime and select Run all. When asked, allow access to Google Drive. The notebook writes `outputs/` and `hf_cache/` inside `MyDrive/Multimodal_Project`. If that folder does not exist, it uses the current Colab folder instead.
 
 > **Important:** The notebook contains one Google Drive mount cell. It is wrapped in a `try` block, so on your own computer it is skipped automatically and the message `Running in Colab: False` is printed. Nothing needs to be changed.
 
 ### Step 5: Wait for the run to finish
 
-The first run downloads the dataset and the model weights, extracts the frozen features and trains the models with three seeds. Feature files are cached, so a rerun loads them in seconds. Do not close the window while the notebook is running.
+The run downloads the dataset and the model weights, extracts the frozen features and trains the models with three seeds. Nothing is cached on disk except the download, so every run decodes the screenshots and extracts the features again. Do not close the window while the notebook is running.
 
 For a quick test of the whole pipeline, set `max_screens` in the configuration cell (section 2.1) to a small number such as `2000`, run the notebook, then set it back to `None` for the full run.
 
@@ -217,7 +217,6 @@ A successful run executes every cell without an error and ends with the conclusi
 | Option | Meaning |
 |---|---|
 | `max_screens` | Number of screens to use. `None` uses the full dataset of 22,417 screens |
-| `force_recompute` | Set to `True` to rebuild the cache instead of loading it |
 | `run_clip` | Set to `False` to skip the frozen CLIP reference |
 | `seeds` | Training seeds for the trained models (default 0, 1 and 2) |
 
@@ -235,15 +234,13 @@ All outputs are written under `outputs\`.
 | `tables\tNN_name.csv` | Every table of the notebook, numbered in order of appearance |
 | `configs\` | The configuration record of the run, the split manifest and the library and GPU versions |
 
-**Cache**
+**Downloads**
 
 | File | Content |
 |---|---|
-| `cache\imgs_*.npy` | Decoded and resized screenshots |
-| `cache\imgstats_*.parquet` | Image quality statistics |
-| `cache\features_*.npz` | ResNet-50, BERT and CLIP feature files, named with a hash of the data manifest |
+| `hf_cache\` | The downloaded RICO-Screen2Words dataset |
 
-The cache can be deleted at any time. The notebook rebuilds it on the next run.
+`hf_cache\` can be deleted after the run. The next run then downloads the dataset again.
 
 ---
 
@@ -269,7 +266,7 @@ All parameters are in the dictionary `CFG` in the setup cell of section 2.1.
 | Evaluation | `bootstrap` | 1000 | Paired bootstrap resamples |
 | Reference | `run_clip` | `True` | Frozen CLIP, reference only |
 
-Output and cache paths are derived automatically: `outputs\` and `cache\` in the folder the notebook is started from, or the Colab paths when run in Colab.
+Output and download paths are derived automatically: `outputs\` and `hf_cache\` in the folder the notebook is started from, or inside `MyDrive/Multimodal_Project` when run in Colab. `num_workers` is set to 0 so that image loading does not start worker processes, which often fail on Windows.
 
 ---
 
@@ -303,7 +300,7 @@ Output and cache paths are derived automatically: `outputs\` and `cache\` in the
 
 ### Repeated runs
 
-- Seeds are fixed, and the feature cache is keyed to a hash of the data manifest, so a rerun gives the same features.
+- Seeds are fixed and a manifest of the data checksums is printed, so a rerun uses the same data and gives the same features.
 - Exact numbers can differ slightly between GPU types and library versions.
 
 ---

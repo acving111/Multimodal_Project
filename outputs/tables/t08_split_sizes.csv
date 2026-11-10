@@ -1,0 +1,7 @@
+,split_reference,screens,captions
+split_reference,test,4310,21367
+split_reference,train,15743,78006
+split_reference,val,2364,11733
+split_grouped,test,2176,10780
+split_grouped,train,18080,89622
+split_grouped,val,2161,10704

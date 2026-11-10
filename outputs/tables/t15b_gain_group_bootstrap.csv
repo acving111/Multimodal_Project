@@ -1,0 +1,9 @@
+A,B,direction,seeds averaged for A,"mean gain (A minus B, points)",95% CI low,95% CI high,interval excludes zero,gain of 5 points or more
+Early fusion (MLP),Ridge (linear mapping),screen to text,3,0.84,-1.01,2.51,no,no
+Early fusion (MLP),Ridge (linear mapping),text to screen,3,3.06,2.09,3.98,yes,no
+Contrastive dual encoder,Ridge (linear mapping),screen to text,3,2.68,0.87,4.33,yes,no
+Contrastive dual encoder,Ridge (linear mapping),text to screen,3,4.68,3.58,5.79,yes,no
+Contrastive dual encoder,Early fusion (MLP),screen to text,3,1.84,0.83,2.75,yes,no
+Contrastive dual encoder,Early fusion (MLP),text to screen,3,1.62,0.88,2.33,yes,no
+CLIP ViT-B/32 zero-shot (reference),Contrastive dual encoder,screen to text,1,19.38,16.86,21.95,yes,yes
+CLIP ViT-B/32 zero-shot (reference),Contrastive dual encoder,text to screen,1,12.26,10.25,14.3,yes,yes

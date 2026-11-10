@@ -1,0 +1,7 @@
+Risk,Mitigation used here,Limitation of the mitigation
+"Representation (few apps dominate, category imbalance)",Per-category and macro-averaged recall with bootstrap intervals as described in Section 4.6,"Small test sets per category give wide intervals, so gaps are indicative only"
+Leakage across related screens,Grouped split by app and visual near-duplicate as described in Section 2.6,"Reduces training data and tests a harder setting, so absolute scores fall"
+Privacy in screenshots,"Manual review, row exclusion, no redistribution of images, access-controlled storage","Manual review covers a sample (80 screens), not the whole dataset; text inside images is not machine-checked"
+Licensing,Dataset card licence and RICO notice recorded; images not redistributed,The card licence is not assumed to cover every original RICO screenshot
+Accessibility and small text,Failure analysis as described in Section 4.7; recommend OCR and layout-aware features,"ResNet-50 at 224 px cannot read small interface text, so captions that depend on it fail"
+Wrong retrieval in deployment,"Show top-K with scores, human check for consequential uses, monitor drift and latency",Reported recall is on a 2017-era Android collection and may not hold for newer designs or other platforms

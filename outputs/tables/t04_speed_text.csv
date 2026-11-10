@@ -1,0 +1,4 @@
+method,seconds,same_output
+python loop with re.sub,0.919,True
+map + compiled regex lambda,0.717,True
+pandas vectorised .str,0.75,True

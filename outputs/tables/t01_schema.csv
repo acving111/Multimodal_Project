@@ -1,0 +1,18 @@
+column,dtype,example
+screenId,int64,2
+captions,object,"['notification displaying a calendar with done option'
+ 'pop up displa"
+file_name,object,rico/2.jpg
+app_package_name,object,yong.app.videoeditor
+play_store_name,object,Video Maker Pro Free
+category,object,Video Players & Editors
+average_rating,float64,3.4
+number_of_ratings,object,100637
+number_of_downloads,object,"  5,000,000 - 10,000,000  "
+file_name_icon,object,rico_icons/yong.app.videoeditor.png
+file_name_semantic,object,rico_semantic_annotations/2.png
+semantic_annotations,object,"{""ancestors"": [""android.widget.FrameLayout"", ""android.view.ViewGroup"","
+view_hierarchy,object,"{""activity_name"": ""se.perigee.android.seven/com.perigee.seven.ui.activ"
+orig_split,object,train
+_row,int64,0
+caps,object,"['notification displaying a calendar with done option', 'pop up displa"

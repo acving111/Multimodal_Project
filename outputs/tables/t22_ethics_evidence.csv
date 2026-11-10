@@ -1,0 +1,9 @@
+,value
+screens_per_category_min_max,"(1, 1648)"
+apps,6269
+top10_apps_share_of_screens_%,1.45
+median_screens_per_app,2.0
+non_ascii_caption_share_%,0.0
+screens_with_login_or_payment_wording_%,13.03
+screen_to_text_R10_sensitive_minus_other_points (95% CI),"-7.8 (-10.4 to -4.9), n=280 vs 1896"
+rows_excluded_after_manual_privacy_review,0

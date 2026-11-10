@@ -1,0 +1,5 @@
+model,trainable_params_M,train_seconds,peak_gpu_gb,ms_per_query_100k,avg_R10
+Early fusion (MLP),1.968,152.431,7.204,4.301,9.809
+Contrastive dual encoder,1.705,11.915,3.278,0.572,11.54
+Ridge (linear mapping),1.573,,,3.369,7.861
+CLIP ViT-B/32 zero-shot (reference),0.0,,,0.945,27.359

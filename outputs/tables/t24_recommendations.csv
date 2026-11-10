@@ -1,0 +1,4 @@
+Situation,Recommended model,Evidence from this run
+Fast prototype,Ridge (linear mapping),closed form with no training loop and 7.9% mean Recall@10
+Retrieval service over a large gallery,Contrastive dual encoder,11.5% mean Recall@10 at 0.57 ms per query for 100000 candidates with precomputed embeddings
+Highest accuracy when a pretrained image-text model is allowed,CLIP ViT-B/32 zero-shot (reference),highest mean Recall@10 on the grouped split (27.4%) with no training cost; fine-tuning on this data is the natural next step

@@ -1,0 +1,6 @@
+,official split,grouped split,inflation_points
+Random,0.2,0.5,-0.3
+Ridge (linear mapping),4.73,7.86,-3.13
+Early fusion (MLP),5.99,9.81,-3.82
+Contrastive dual encoder,7.6,11.54,-3.94
+CLIP ViT-B/32 zero-shot (reference),21.49,27.36,-5.87

@@ -1,0 +1,9 @@
+configuration,train_R10,val_R10,gap_points,note
+"Ridge (frozen features, linear map)",17.68,7.78,9.9,
+Early fusion (MLP): default hyper-parameters,18.0,8.84,9.16,search trial 0
+Early fusion (MLP): tuned (mean of 3 seeds),32.72,10.09,22.63,early stopping + validation checkpoint
+Contrastive dual encoder: default hyper-parameters,59.71,11.66,48.04,search trial 0
+Contrastive dual encoder: tuned (mean of 3 seeds),60.29,11.27,49.02,early stopping + validation checkpoint
+"Contrastive: small projection head (emb 64, hid 128, dropout 0.5, wd 0.1)",24.78,9.75,15.03,capacity control
+Contrastive trained on SHUFFLED pairs (control),56.87,0.78,56.1,validation should stay near chance
+Random scores (chance level),0.42,0.42,0.0,

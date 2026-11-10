@@ -1,0 +1,11 @@
+A,B,direction,"R@10 difference (A minus B, points)",95% CI low,95% CI high,reliable
+Early fusion (MLP),Ridge (linear mapping),screen to text,0.78,-0.78,2.21,no
+Early fusion (MLP),Ridge (linear mapping),text to screen,3.07,2.47,3.66,yes
+Contrastive dual encoder,Ridge (linear mapping),screen to text,2.21,0.64,3.72,yes
+Contrastive dual encoder,Ridge (linear mapping),text to screen,4.34,3.69,4.96,yes
+Contrastive dual encoder,Early fusion (MLP),screen to text,1.42,-0.09,2.9,no
+Contrastive dual encoder,Early fusion (MLP),text to screen,1.27,0.7,1.86,yes
+Contrastive dual encoder,CLIP ViT-B/32 zero-shot (reference),screen to text,-19.85,-22.1,-17.65,yes
+Contrastive dual encoder,CLIP ViT-B/32 zero-shot (reference),text to screen,-12.6,-13.55,-11.61,yes
+CLIP ViT-B/32 zero-shot (reference),Ridge (linear mapping),screen to text,22.06,20.04,24.22,yes
+CLIP ViT-B/32 zero-shot (reference),Ridge (linear mapping),text to screen,16.94,16.05,17.84,yes

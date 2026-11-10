@@ -1,0 +1,16 @@
+,Early fusion (MLP),Contrastive dual encoder,Ridge (linear mapping)
+seeds,"[0, 1, 2]","[0, 1, 2]",closed form
+hidden,512,512,n/a
+embedding,n/a,256,2048
+dropout,0.1,0.3,n/a
+learning_rate,0.001,0.001,n/a
+weight_decay,0.001,0.01,alpha 100
+batch,128,256,n/a
+max_epochs,60,60,n/a
+patience,10,10,n/a
+optimiser,AdamW,AdamW,normal equations
+scheduler,1-epoch warm-up + cosine,1-epoch warm-up + cosine,n/a
+trainable_params_M,1.968,1.705,1.573
+best_epochs,"[48, 40, 42]","[23, 32, 15]",n/a
+train_seconds_mean,152.4,11.9,n/a
+peak_gpu_gb,7.2,3.28,n/a

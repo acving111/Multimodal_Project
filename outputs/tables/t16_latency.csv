@@ -1,0 +1,5 @@
+model,1000,10000,100000,1000000
+CLIP ViT-B/32 zero-shot (reference),0.054,0.222,0.945,8.758*
+Contrastive dual encoder,0.062,0.238,0.572,4.448*
+Early fusion (MLP),0.043,0.43,4.301,43.006
+Ridge (linear mapping),0.097,0.386,3.369*,34.264*
