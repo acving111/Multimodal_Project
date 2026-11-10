@@ -4,7 +4,7 @@
 **Student Name - Acvin Gonsalves**
 **Student ID - a2996845**
 
-This project builds and compares models that retrieve written summaries from a screenshot (screen to text) and screenshots from a written summary (text to screen) on the RICO-Screen2Words dataset. It covers data quality checks, a leakage-aware split, four models (ridge baseline, early fusion, contrastive dual encoder and a frozen CLIP reference), statistical comparison, efficiency, overfitting diagnosis, subgroup and failure analysis, and ethics. Everything is run from one notebook, `Multimodal_Project_2_2_RICO_Retrieval_a2996845.ipynb`.
+This project builds and compares models that retrieve written summaries from a screenshot (screen to text) and screenshots from a written summary (text to screen) on the RICO-Screen2Words dataset. It covers data quality checks, a leakage-aware split, four models (ridge baseline, early fusion, contrastive dual encoder and a frozen CLIP reference), statistical comparison, efficiency, overfitting diagnosis, subgroup and failure analysis, and ethics. Everything is run from one notebook, `Multimodal_Project_2_2_RICO_Retrieval_a2998645.ipynb`.
 
 The submitted notebook contains the saved outputs of one full run on a free Google Colab T4 GPU, and the report uses those numbers. A rerun with the same seeds follows the same steps. Timings differ between machines.
 
@@ -67,7 +67,7 @@ The notebook reads its data only from the Hugging Face dataset. It does not stor
 
 | File | Purpose |
 |---|---|
-| `Multimodal_Project_2_2_RICO_Retrieval_a2996845.ipynb` | The full pipeline with saved outputs: data, features, models, evaluation, ethics |
+| `Multimodal_Project_2_2_RICO_Retrieval_a2998645.ipynb` | The full pipeline with saved outputs: data, features, models, evaluation, ethics |
 | `requirements.txt` | Python dependencies |
 | `README.md` | This file |
 
@@ -119,7 +119,7 @@ Before running, the folder must look like this:
 
 ```text
 Multimodal_Project\
-|-- Multimodal_Project_2_2_RICO_Retrieval_a2996845.ipynb
+|-- Multimodal_Project_2_2_RICO_Retrieval_a2998645.ipynb
 |-- requirements.txt
 |-- README.md
 |
@@ -324,19 +324,19 @@ Open these files in `outputs\` after a successful run to check the numbers and f
 |---|---|
 | 3.2 | Ridge baseline and BERT pooling choice |
 | 3.4 and 3.5 | Hyper-parameter search, final runs and training curves |
-| 4.1 | Main results table: mean Recall@10 of random 0.50, ridge 7.87, early fusion 9.68, contrastive 11.51 and CLIP 27.36 |
+| 4.1 | Main results table: mean Recall@10 of random 0.50, ridge 7.86, early fusion 9.81, contrastive 11.54 and CLIP 27.36 |
 | 4.2 | Recall at K curves |
-| 4.3 | Paired bootstrap comparison: gain over ridge of +2.63 (screen to text) and +4.66 (text to screen), against the target of +5 |
+| 4.3 | Paired bootstrap comparison: gain over ridge of +2.68 (screen to text) and +4.68 (text to screen), against the target of +5 |
 
 ### Evaluation and analysis
 
 | Notebook section | What to check |
 |---|---|
-| 4.4 | Query time at 100,000 candidates (early fusion 4.29 ms, contrastive 0.54 ms), training time and GPU memory |
-| 4.5 | Train 60.27 against validation 11.29, shuffled-pairs control (56.74 train, 0.78 validation, chance 0.42) |
+| 4.4 | Query time at 100,000 candidates (early fusion 4.30 ms, contrastive 0.57 ms), training time and GPU memory |
+| 4.5 | Train 60.29 against validation 11.27, shuffled-pairs control (56.87 train, 0.78 validation, chance 0.42) |
 | 4.6 | Recall by app category (0 to 29.2 percent) |
 | 4.7 | Success and failure examples and the failure breakdown |
-| 5.1 | Ethics evidence: sensitive wording (13.03 percent of screens flagged, 7.9 points lower), representation, privacy and licence |
+| 5.1 | Ethics evidence: sensitive wording (13.03 percent of screens flagged, 7.8 points lower), representation, privacy and licence |
 | 5.2 to 5.4 | Reflection, recommended model for three situations, limitations and conclusion |
 
 ### Where each report part comes from
